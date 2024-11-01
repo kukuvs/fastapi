@@ -1,8 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Form
+from fastapi.responses import FileResponse
 
-my_awesome_api = FastAPI()
+app = FastAPI()
 
 
-@my_awesome_api.get("/")
+@app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return FileResponse("index.html")
+
+@app.post("/calculate")
+async def summ(num1: int = Form(ge=0, lt=111), num2: int = Form(ge=0, lt=111)):
+    return {"sum": num1 + num2}
+    
